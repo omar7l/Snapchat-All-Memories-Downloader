@@ -49,7 +49,7 @@ Snapchat may give you:
 After unzipping, you will usually end up with something like this:
 
 ```text
-raw-zips/
+snapchat-export/
   mydata~123456789/
     json/
       memories_history.json
@@ -84,7 +84,7 @@ cd Snapchat-All-Memories-Downloader
 
 ### 2. Put your Snapchat export parts into one place
 
-Create a folder such as `raw-zips/` in the repo and put all downloaded Snapchat ZIP files there.
+Create a folder such as `snapchat-export/` in the repo and put all downloaded Snapchat ZIP files there.
 
 Then unzip all of them.
 
@@ -111,11 +111,11 @@ python3 -m pip install -r requirements.txt
 Run this:
 
 ```bash
-python3 main.py raw-zips/mydata~YOUR_EXPORT/json/memories_history.json -o imported_memories --import-local-media raw-zips
+python3 main.py snapchat-export/mydata~YOUR_EXPORT/json/memories_history.json -o imported_memories --import-local-media snapchat-export
 ```
 
 What this does:
-- scans all extracted export folders under `raw-zips`
+- scans all extracted export folders under `snapchat-export`
 - finds the real Snapchat media files already inside the export
 - copies them into `imported_memories/`
 - writes proper date, time, and location metadata onto the copied files
@@ -173,13 +173,13 @@ brew install ffmpeg
 Preview candidate chains:
 
 ```bash
-python3 merge_split_videos.py raw-zips/mydata~YOUR_EXPORT/json/memories_history.json -i imported_memories --dry-run --min-parts 2
+python3 merge_split_videos.py snapchat-export/mydata~YOUR_EXPORT/json/memories_history.json -i imported_memories --dry-run --min-parts 2
 ```
 
 Bulk merge them:
 
 ```bash
-python3 merge_split_videos.py raw-zips/mydata~YOUR_EXPORT/json/memories_history.json -i imported_memories -o merged_videos --min-parts 2 --replace-strong
+python3 merge_split_videos.py snapchat-export/mydata~YOUR_EXPORT/json/memories_history.json -i imported_memories -o merged_videos --min-parts 2 --replace-strong
 ```
 
 What that does:
@@ -230,25 +230,25 @@ Because Snapchat sometimes exports longer videos as a chain of short clips. Use 
 Import local media from the extracted export:
 
 ```bash
-python3 main.py raw-zips/mydata~YOUR_EXPORT/json/memories_history.json -o imported_memories --import-local-media raw-zips
+python3 main.py snapchat-export/mydata~YOUR_EXPORT/json/memories_history.json -o imported_memories --import-local-media snapchat-export
 ```
 
 Repair metadata on files you already imported:
 
 ```bash
-python3 main.py raw-zips/mydata~YOUR_EXPORT/json/memories_history.json -o imported_memories --repair-existing
+python3 main.py snapchat-export/mydata~YOUR_EXPORT/json/memories_history.json -o imported_memories --repair-existing
 ```
 
 Preview split-video candidates:
 
 ```bash
-python3 merge_split_videos.py raw-zips/mydata~YOUR_EXPORT/json/memories_history.json -i imported_memories --dry-run --min-parts 2
+python3 merge_split_videos.py snapchat-export/mydata~YOUR_EXPORT/json/memories_history.json -i imported_memories --dry-run --min-parts 2
 ```
 
 Merge split videos:
 
 ```bash
-python3 merge_split_videos.py raw-zips/mydata~YOUR_EXPORT/json/memories_history.json -i imported_memories -o merged_videos --min-parts 2 --replace-strong
+python3 merge_split_videos.py snapchat-export/mydata~YOUR_EXPORT/json/memories_history.json -i imported_memories -o merged_videos --min-parts 2 --replace-strong
 ```
 
 Fallback downloader mode:
