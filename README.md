@@ -1,6 +1,8 @@
-# Snapchat Memories Toolkit
+# Fix Snapchat Exports for Apple Photos and iCloud Photos
 
-Fix a Snapchat export so your photos and videos keep the correct date, time, and location metadata, especially in Apple Photos.
+Fix a Snapchat export so your photos and videos keep the correct date, time, and location metadata in Apple Photos and iCloud Photos.
+
+That is the main reason this project exists.
 
 This project exists because I ran into the exact same mess a lot of other people describe online:
 - Snapchat exports split across multiple ZIP files
@@ -28,7 +30,7 @@ If you are searching for any of these, you are in the right place:
 This toolkit can:
 - import Snapchat Memories from the exported ZIP parts you already downloaded
 - restore correct date, time, and GPS metadata to images and videos
-- make imports behave much better in Apple Photos
+- make imports behave much better in Apple Photos and iCloud Photos
 - keep filenames collision-safe when multiple memories share the same timestamp
 - merge Snapchat videos that were exported as multiple 10-second clips
 
@@ -122,17 +124,17 @@ What this does:
 
 When it finishes, `imported_memories/` is the folder you actually want to import into Apple Photos or keep as your clean archive.
 
-## Why Apple Photos Shows The Wrong Date For Snapchat Exports
+## Why Apple Photos and iCloud Photos Show The Wrong Date For Snapchat Exports
 
 This is one of the biggest problems people search for.
 
-A raw Snapchat export often does **not** store the useful metadata directly inside the image or video in the way Apple Photos expects. The date and location can be present in `memories_history.json`, but Apple Photos does not organize your library based on that JSON file.
+A raw Snapchat export often does **not** store the useful metadata directly inside the image or video in the way Apple Photos expects. The date and location can be present in `memories_history.json`, but Apple Photos and iCloud Photos do not organize your library based on that JSON file.
 
 This toolkit fixes that by writing:
 - JPEG EXIF date and GPS metadata
 - MP4 QuickTime-compatible date and GPS metadata
 
-That makes Apple Photos much more likely to show the real capture date and location correctly.
+That makes Apple Photos and iCloud Photos much more likely to show the real capture date and location correctly.
 
 For best MP4 compatibility on macOS, install `exiftool`:
 
@@ -187,6 +189,11 @@ What that does:
 - original parts are moved to `split_video_parts_backup/`
 - weaker 2-part candidates are written as extra review copies to `merged_videos/`
 
+Merged videos also get metadata written back onto them, using the first memory in the chain as the capture date and location source.
+
+If a strong merge fails, the original clips stay where they are.
+If a strong merge succeeds but you later decide it merged the wrong videos together, the original parts are still preserved in `split_video_parts_backup/`.
+
 ## What If My Export Only Has JSON And No Local Media Files?
 
 Some Snapchat exports are different.
@@ -201,13 +208,19 @@ But if your export already contains the real media files, local import is simple
 
 ## Common Questions
 
-### Does this fix the wrong date in Apple Photos?
+### Does this fix the wrong date in Apple Photos and iCloud Photos?
 
 That is exactly one of the main goals.
 
 ### Does this restore location metadata?
 
 Yes, when the location exists in the Snapchat export JSON.
+
+### Does this work outside Apple Photos?
+
+Probably sometimes, yes, because it writes standard metadata back into the files.
+
+But Apple Photos and iCloud Photos are the main target and the workflow that was actually tested carefully.
 
 ### Does this work with split Snapchat ZIP exports?
 
