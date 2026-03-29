@@ -1,3 +1,11 @@
 .vscode
 downloads
+imported_memories
+merged_videos
+split_video_parts_backup
+raw-zips
+.venv
 json
+memories
+__pycache__/
+.DS_Store
